@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:html';
 
+import 'package:clima/screens/location_screen.dart';
 import 'package:clima/services/location.dart';
 import 'package:clima/services/networking.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart';
 
@@ -47,19 +49,20 @@ class _LoadingScreenState extends State<LoadingScreen> {
     var temperature = data['main']['temp'];
     print(
         'The weather in $cityName is $weatherDescription, current temperature is ${temperature - 273}');
+
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return LocationScreen();
+    }));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: TextButton(
-          onPressed: () {
-            getLocation();
-          },
-          child: Text('Get Location'),
-        ),
-      ),
+          child: SpinKitDoubleBounce(
+        color: Colors.white,
+        size: 100,
+      )),
     );
   }
 }
